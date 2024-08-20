@@ -1,25 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import ProductCard from '../../components/product-card/ProductCard';
 import ProductSkeleton from '../../components/product-skeleton/ProductSkeleton';
+import { productContext } from '../../contexts/ProductProvider';
 
 const TopRated = () => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
 
-    useEffect(() => {
-        fetch('https://fakestoreapi.com/products')
-            .then(res => res.json())
-            .then(data => {
-                setProducts(data)
-                setLoading(false)
-            }).catch(err => {
-                setError(err.message)
-                setLoading(false)
-            })
-    }, [])
+    const { state } = useContext(productContext)
 
-    if (loading) return (
+    if (state.loading) return (
         <div>
             <h1 className='text-3xl font-semibold text-gray-400 mb-8'>Top Rated</h1>
 
@@ -36,7 +24,7 @@ const TopRated = () => {
 
     )
 
-    if (error) return <p>Something Went Wrong.</p>
+    if (state.error) return <p>Something Went Wrong.</p>
 
     return (
         <div>
@@ -44,7 +32,7 @@ const TopRated = () => {
 
             <div className='grid grid-cols-3 gap-8'>
                 {
-                    products.filter(product => product.rating.rate > 4).map(product => <ProductCard product={product}></ProductCard>)
+                    state.products.filter(product => product.rating.rate > 4).map(product => <ProductCard product={product}></ProductCard>)
                 }
             </div>
 

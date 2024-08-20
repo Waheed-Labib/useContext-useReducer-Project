@@ -1,22 +1,11 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useContext } from 'react';
 import ProductCard from '../../components/product-card/ProductCard';
 import ProductSkeleton from '../../components/product-skeleton/ProductSkeleton';
-import { initialState, productReducer } from '../../states/reducers/ProductReducer';
-import { FETCHING_ERROR, FETCHING_SUCCESS } from '../../states/action-types/actionTypes';
+import { productContext } from '../../contexts/ProductProvider';
 
 const AllProducts = () => {
 
-    const [state, dispatch] = useReducer(productReducer, initialState)
-
-    useEffect(() => {
-        fetch('https://fakestoreapi.com/products')
-            .then(res => res.json())
-            .then(data => {
-                dispatch({ type: FETCHING_SUCCESS, payload: { products: data } })
-            }).catch(err => {
-                dispatch({ type: FETCHING_ERROR, payload: { error: err.message } })
-            })
-    }, [])
+    const { state } = useContext(productContext)
 
     if (state.loading) return (
         <div>
