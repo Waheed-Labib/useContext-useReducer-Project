@@ -1,11 +1,10 @@
-import { RouterProvider, useLocation } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import './App.css';
 import router from './routes/Routes';
 
 function App() {
-
   return (
-    <div className="m-8">
+    <div className="p-8 bg-gray-950">
       <RouterProvider router={router}></RouterProvider>
     </div>
   );
